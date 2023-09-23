@@ -1,48 +1,34 @@
 {% load static %}
-<!-- <header id="header">
-    <div class="container">
-        <div class="row no-gutters">
-            <div class="col col-xl-2">
-                <div class="logo-main image-center">
-                    <a href="/" class="image-center">
-                        <img src="{% static 'images/logo.png' %}" alt="Logo main">
-                    </a>
-                </div>
-            </div>
-            <div class="col col-xl-8 text-right">
-                <nav id="nav">
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Contact</a>
-                </nav>
-            </div>
-            <div class="col col-xl-2 ">
-                <div class="image-center avatar-user">
-                    <img class="avatar-dark" src="{% static 'images/ava-login-dark.png' %}" alt="">
-                    <img class="avatar-white" src="{% static 'images/ava-login-white.png' %}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</header> -->
 
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
-    <a href="{% url 'home' %}" class="navbar-brand">
-        <h1 class="m-0 text-primary"><i class="fa fa-book-reader me-3"></i>Kider</h1>
-    </a>
-    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav mx-auto">
-            <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
-            <a href="#" class="nav-item nav-link">About Us</a>
-            <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a>
-            <a href="#" class="nav-item nav-link">Contact Us</a>
-        </div>
-        <a href="" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
+<nav
+  class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0 border-bottom border-1"
+>
+  <a href="{% url 'home' %}" class="navbar-brand">
+    <h1 class="m-0 text-primary">
+      <i class="fa fa-book-reader me-3"></i>Kider
+    </h1>
+  </a>
+  <button
+    type="button"
+    class="navbar-toggler"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarCollapse"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav mx-auto">
+      <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+      <a href="#" class="nav-item nav-link">About Us</a>
+      <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a>
+      <a href="#" class="nav-item nav-link">Contact Us</a>
     </div>
+    <a
+      href="{% url 'login' %}"
+      class="btn btn-primary rounded-pill px-3 d-none d-lg-block"
+      >Login<i class="fa fa-arrow-right ms-3"></i
+    ></a>
+  </div>
 </nav>
 <!-- Navbar End -->

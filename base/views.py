@@ -1,19 +1,21 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from .models import *
-import json
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    context = {'user_not_login': "show",
+               'user_login': "hidden"}
+    return render(request, 'home.html', context)
 
 def classes(request):
     return render(request, 'classes.html')
 
 def loginPage(request):
+    context = {'user_not_login': "show",
+               'user_login': "hidden"}
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == "POST":
@@ -23,12 +25,18 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return render(request, 'home.html', context)
         else:
-            messages.info(request, 'Email hoặc mật khẩu không chính xác!')
-    # context = {'user_not_login': "show",
-    #            'user_login': "hidden"}
+            messages.info(request, 'Tài khoản hoặc mật khẩu không chính xác!')
     return render(request, 'login.html')
 
+def logoutPage(request):
+    context = {'user_not_login': "hidden",
+               'user_login': "show"}
+    logout(request)
+    return render(request, 'home.html', context)
+
 def detail(request):
-    return render(request, 'detail.html')
+    context = {'user_not_login': "hidden",
+               'user_login': "show"}
+    return render(request, 'detail.html', context)

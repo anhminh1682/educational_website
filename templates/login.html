@@ -1,4 +1,4 @@
-<!DOCTYPE html> {% load static %} {% load bootstrap5 %} {% bootstrap_css %}
+{% load static %} {% load bootstrap5 %} {% bootstrap_css %}
 {%bootstrap_javascript %}
 <html lang="en">
   <head>
@@ -80,7 +80,7 @@
                   placeholder="Enter a valid email address"
                   name = "username"
                 />
-                <label for="email">Email</label>
+                <label for="email">Username</label>
               </div>
 
               <!-- Password input -->
@@ -111,7 +111,6 @@
                 <a href="#!" class="text-body">Forgot password?</a>
               </div>
               
-
               {% for message in messages %}
               <p
                 id="message"
@@ -121,7 +120,6 @@
               </p>
 
               {% endfor %}
-
 
               <div class="text-center text-lg-start mt-4 pt-2">
                 <button

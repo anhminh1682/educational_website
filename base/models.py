@@ -4,7 +4,7 @@ from django.db import models
 class User(models.Model):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)  # Lưu ý: Trong thực tế, bạn nên sử dụng một hàm băm (hashing) cho mật khẩu.
+    password = models.CharField(max_length=100)
 
     def __str__(self):
         return self.username

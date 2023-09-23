@@ -59,7 +59,8 @@
             />
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form>
+            <form method="POST">
+              {% csrf_token %}
               <div
                 class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mb-4"
               >
@@ -73,10 +74,11 @@
               <!-- Email input -->
               <div class="form-floating mb-4">
                 <input
-                  type="email"
+                  type="text"
                   id="form3Example3"
                   class="form-control form-control-md px-3 py-2 border-0"
                   placeholder="Enter a valid email address"
+                  name = "username"
                 />
                 <label for="email">Email</label>
               </div>
@@ -88,6 +90,7 @@
                   id="form3Example4"
                   class="form-control form-control-md px-3 py-2 border-0"
                   placeholder="Enter password"
+                  name = "password"
                 />
                 <label for="password">Password</label>
               </div>
@@ -107,10 +110,22 @@
                 </div>
                 <a href="#!" class="text-body">Forgot password?</a>
               </div>
+              
+
+              {% for message in messages %}
+              <p
+                id="message"
+                class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: red"
+              >
+                {{message}}
+              </p>
+
+              {% endfor %}
+
 
               <div class="text-center text-lg-start mt-4 pt-2">
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-primary btn-lg"
                   style="padding-left: 2.5rem; padding-right: 2.5rem"
                 >

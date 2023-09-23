@@ -8,6 +8,11 @@ from django.contrib import messages
 def home(request):
     context = {'user_not_login': "show",
                'user_login': "hidden"}
+    if request.user.is_authenticated:
+        return  render(request, 'home.html', context)
+    else:
+        context = {'user_not_login': "hidden",
+               'user_login': "show"}
     return render(request, 'home.html', context)
 
 def classes(request):

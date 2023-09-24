@@ -51,3 +51,13 @@ def detailPage(request):
     if not request.user.is_authenticated:
         return redirect('login')
     return render(request, 'detail.html', context)
+
+
+def dashboard(request):
+    return render(request, 'admin/dashboard.html')
+
+def postManage(request):
+    return render(request, 'admin/post-manage.html')
+
+def addPost(request):
+    return render(request, 'admin/add-post.html')

@@ -1,0 +1,159 @@
+{% extends 'admin/main-dashboard.html' %}{% load static %} {% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb bg-white">
+    <div class="row align-items-center">
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h4 class="page-title">Add New Post</h4>
+      </div>
+      <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <div class="d-md-flex">
+          <ol class="breadcrumb ms-auto pb-8">
+            <li><a href="#" class="fw-normal">Add New Post</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="white-box">
+          <div class="container-fluid px-0">
+            <div class="row">
+              <form method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                  <div class="col-sm-12">
+                    <div class="" style="max-width: 500px">
+                      <div class="">
+                        <label for="avatar-1 cursor-pointer d-block">
+                          <input
+                            id="avatar-1"
+                            name="avatar-1"
+                            name="image" 
+                            type="file"
+                            class="form-control mb-3"
+                            onchange="readURL(this);"
+                            required
+                          />
+                          <div
+                            class="overflow-hidden w-100"
+                            style="position: relative; padding-top: 56.25%"
+                          >
+                            <img
+                              id="avatar-upload"
+                              style="
+                                position: absolute;
+                                inset: 0;
+                                height: 100%;
+                                width: 100%;
+                                object-fit: contain;
+                              "
+                              src="{% static 'images/blank-img.jpg' %}"
+                              alt="your image"
+                            />
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        style="background-color: #f9f9f9"
+                        id="postname"
+                        placeholder="Post Name"
+                        name="title"
+                      />
+                      <label for="postname">Post Name</label>
+            
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-floating">
+                      <select
+                        name="categories"
+                        id="categories"
+                        class="form-control py-0"
+                        style="background-color: #f9f9f9"
+                      >
+                        <option selected value="Math">Math</option>
+                        <option value="Physical">Physical</option>
+                        <option value="Geography">Geography</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <textarea
+                        class="form-control h-auto"
+                        style="background-color: #f9f9f9; min-height: 250px"
+                        placeholder="Description"
+                        id="postDescription"
+                        name="content"
+                      ></textarea>
+                      <label for="postDescription">Description</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-primary w-100 py-3" type="submit">
+                      Create Post
+                    </button>
+                  </div>
+
+                  <div class="col-6">
+                    <button class="btn btn-primary w-100 py-3" type="submit">
+                      Update Post
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">2021 ©</footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+{% endblock %}

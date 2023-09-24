@@ -36,7 +36,8 @@
         <div class="white-box">
           <div class="container-fluid px-0">
             <div class="row">
-              <form>
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="row g-3">
                   <div class="col-sm-12">
                     <div class="" style="max-width: 500px">
@@ -44,7 +45,7 @@
                         <label for="avatar-1 cursor-pointer d-block">
                           <input
                             id="avatar-1"
-                            name="avatar-1"
+                            name="image"
                             type="file"
                             class="form-control mb-3"
                             onchange="readURL(this);"
@@ -79,8 +80,10 @@
                         style="background-color: #f9f9f9"
                         id="postname"
                         placeholder="Post Name"
+                        name="title"
                       />
                       <label for="postname">Post Name</label>
+            
                     </div>
                   </div>
                   <div class="col-sm-12">
@@ -104,6 +107,7 @@
                         style="background-color: #f9f9f9; min-height: 250px"
                         placeholder="Description"
                         id="postDescription"
+                        name="content"
                       ></textarea>
                       <label for="postDescription">Description</label>
                     </div>

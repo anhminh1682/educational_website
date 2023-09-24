@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse, JsonResponse
+from base.forms import PostForm
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -56,8 +56,18 @@ def detailPage(request):
 def dashboard(request):
     return render(request, 'admin/dashboard.html')
 
+
 def postManage(request):
     return render(request, 'admin/post-manage.html')
 
+
 def addPost(request):
-    return render(request, 'admin/add-post.html')
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Lưu bài viết vào cơ sở dữ liệu
+            # Chuyển hướng sau khi lưu thành công
+            return redirect('post-manage/')
+    else:
+        form = PostForm()
+    return render(request, 'admin/add-post.html', {'form': form})

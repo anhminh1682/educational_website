@@ -13,3 +13,12 @@ def login(request):
 
 def detail(request):
     return render(request, 'detail.html')
+
+def dashboard(request):
+    return render(request, 'admin/dashboard.html')
+
+def postManage(request):
+    return render(request, 'admin/post-manage.html')
+
+def addPost(request):
+    return render(request, 'admin/add-post.html')

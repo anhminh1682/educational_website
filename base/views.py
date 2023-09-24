@@ -5,22 +5,21 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 # Create your views here.
 
-def home(request):
-    context = {'user_not_login': "show",
-               'user_login': "hidden"}
+def get_common_context(request):
+    context = {'user_not_login': "hidden", 'user_login': "show"}
     if request.user.is_authenticated:
-        return  render(request, 'home.html', context)
-    else:
-        context = {'user_not_login': "hidden",
-               'user_login': "show"}
+        context = {'user_not_login': "show", 'user_login': "hidden"}
+    return context
+
+def home(request):
+    context = get_common_context(request)
     return render(request, 'home.html', context)
 
 def classes(request):
     return render(request, 'classes.html')
 
 def loginPage(request):
-    context = {'user_not_login': "show",
-               'user_login': "hidden"}
+    context = get_common_context(request)
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == "POST":
@@ -30,16 +29,16 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'home.html', context)
+            return redirect('home')
         else:
             messages.info(request, 'Tài khoản hoặc mật khẩu không chính xác!')
     return render(request, 'login.html')
 
 def logoutPage(request):
-    context = {'user_not_login': "hidden",
-               'user_login': "show"}
+    context = get_common_context(request)
     logout(request)
-    return render(request, 'home.html', context)
+    # return render(request, 'home.html', context)
+    return redirect('home')
 
 def detail(request):
     context = {'user_not_login': "hidden",

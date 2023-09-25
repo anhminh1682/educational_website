@@ -24,7 +24,7 @@
       <a href="{% url 'classes' %}" class="nav-item nav-link">Classes</a>
       <a href="#" class="nav-item nav-link">Contact Us</a>
     </div>
-    <div style="visibility: {{ user_not_login }}">
+    <div style="display: {{ user.user_not_login }}">
       <span style="font-size: 18px; color: #007bff;">{{ request.user }}</span>
       <span style="display: inline-block; vertical-align: middle;">
           <a href="{% url 'logout' %}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">
@@ -32,7 +32,7 @@
           </a>
       </span>
   </div>  
-    <div style="visibility: {{user_login}}">
+    <div style="display: {{user.user_login}}">
       <a
         href="{% url 'login' %}"
         class="btn btn-primary rounded-pill px-3 d-none d-lg-block"

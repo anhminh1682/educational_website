@@ -36,7 +36,7 @@
         <div class="white-box">
           <div class="container-fluid px-0">
             <div class="row">
-              <form method="POST" enctype="multipart/form-data">
+              <form id="postForm" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row g-3">
                   <div class="col-sm-12">
@@ -49,7 +49,8 @@
                             type="file"
                             class="form-control mb-3"
                             onchange="readURL(this);"
-                            required
+                            {% comment %} required {% endcomment %}
+                            {% comment %} value="{{ post.image.url|default:'' }}"  {% endcomment %}
                           />
                           <div
                             class="overflow-hidden w-100"
@@ -64,7 +65,8 @@
                                 width: 100%;
                                 object-fit: contain;
                               "
-                              src="{% static 'images/blank-img.jpg' %}"
+                              src="{{ post.image.url|default:'/static/images/blank-img.jpg' }}"
+                              {% comment %} src="{% static 'images/blank-img.jpg' %}" {% endcomment %}
                               alt="your image"
                             />
                           </div>
@@ -81,8 +83,9 @@
                         id="postname"
                         placeholder="Post Name"
                         name="title"
+                        value="{{ post.title }}"
                       />
-                      <label for="postname">Post Name</label>
+                      <label for="postname">Chủ đề</label>
             
                     </div>
                   </div>
@@ -108,18 +111,20 @@
                         placeholder="Description"
                         id="postDescription"
                         name="content"
-                      ></textarea>
-                      <label for="postDescription">Description</label>
+                      >{{ post.content|default:'' }}</textarea>
+                      <label for="postDescription">Nội dung</label>
                     </div>
                   </div>
                   <div class="col-6">
-                    <button class="btn btn-primary w-100 py-3" type="submit">
+                    <button class="btn btn-primary w-100 py-3" type="submit" onclick="setFormAction('create');"
+                      style = "display: {{user_new}}">
                       Create Post
                     </button>
                   </div>
 
                   <div class="col-6">
-                    <button class="btn btn-primary w-100 py-3" type="submit">
+                    <button class="btn btn-primary w-100 py-3" type="submit" onclick="setFormAction('update');"
+                      style = "display: {{user_update}}">
                       Update Post
                     </button>
                   </div>
@@ -130,6 +135,18 @@
         </div>
       </div>
     </div>
+    
+    <script>
+      function setFormAction(actionType) {
+          let form = document.getElementById('postForm');
+          if (actionType === 'create') {
+              form.action = "/add-post/"; // URL cho việc tạo bài viết
+          } else if (actionType === 'update' && "{{ post_id }}") {
+              form.action = "/add-post/{{ post_id }}/"; // URL cho việc cập nhật bài viết
+          }
+      }
+  </script>
+  
     <!-- ============================================================== -->
     <!-- End PAge Content -->
     <!-- ============================================================== -->

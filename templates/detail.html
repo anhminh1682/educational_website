@@ -15,16 +15,9 @@
             Posted on {{post.date_create|naturaltime}}
           </div>
           <!-- Post categories-->
-          <a
-            class="badge bg-secondary text-decoration-none link-light"
-            href="#!"
-            >Math</a
-          >
-          <a
-            class="badge bg-secondary text-decoration-none link-light"
-            href="#!"
-            >Physical</a
-          >
+          <strong
+            class="badge bg-secondary text-decoration-none link-light"            
+            ><em>Người viết: {{writer}}</em></strong>
         </header>
         <!-- Preview image figure-->
         <figure class="mb-4">
@@ -41,9 +34,10 @@
           <p class="fs-5 mb-4">{{ paragraph }}</p>
           {% endfor %}
 
-          {% comment %} <h2 class="fw-bolder mb-4 mt-5">
-            I have odd cosmic thoughts every day
-          </h2>
+           {% comment %} <h2 class="fw-bolder mb-4 mt-5">
+            {{ title_text }}
+          </h2> {% endcomment %}
+          {% comment %}
           <p class="fs-5 mb-4">
             For me, the most fascinating interface is Twitter. I have odd cosmic
             thoughts every day and I realized I could hold them to myself or

@@ -66,11 +66,14 @@ def logoutPage(request):
     return redirect('home')
 
 @login_required
-def detailPage(request, post_id):
+def detailPage(request, post_id):    
     user = get_common_context(request)
+    # Lấy post dựa trên post_id
     post = get_object_or_404(Posts, id=post_id, is_deleted=False)
+    # Lấy tên của người viết
+    author_name = post.author.username 
     paragraphs = post.content.split('\n')
-    context = {'user': user, 'post': post, 'paragraphs': paragraphs}
+    context = {'user': user, 'post': post, 'paragraphs': paragraphs, 'writer':author_name}
     return render(request, 'detail.html', context)
 
 @login_required

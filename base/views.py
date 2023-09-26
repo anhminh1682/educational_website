@@ -65,16 +65,19 @@ def logoutPage(request):
     logout(request)
     return redirect('home')
 
+
 @login_required
-def detailPage(request, post_id):    
+def detailPage(request, post_id):
     user = get_common_context(request)
     # Lấy post dựa trên post_id
     post = get_object_or_404(Posts, id=post_id, is_deleted=False)
     # Lấy tên của người viết
-    author_name = post.author.username 
+    author_name = post.author.username
     paragraphs = post.content.split('\n')
-    context = {'user': user, 'post': post, 'paragraphs': paragraphs, 'writer':author_name}
+    context = {'user': user, 'post': post,
+               'paragraphs': paragraphs, 'writer': author_name}
     return render(request, 'detail.html', context)
+
 
 @login_required
 def dashboard(request):
@@ -111,6 +114,7 @@ def postManage(request):
         posts = Posts.objects.filter(author=request.user, is_deleted=False)
     context = {'user_not_admin': user_not_admin, 'posts': posts}
     return render(request, 'admin/post-manage.html', context)
+
 
 def handle_post_creation(request, form):
     """
@@ -190,3 +194,7 @@ def addPost(request, post_id=None):
     }
 
     return render(request, 'admin/add-post.html', content)
+
+
+def error(request, exception=None):
+    return render(request, 'error/error.html', {'exception': exception})

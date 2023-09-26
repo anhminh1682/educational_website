@@ -1,0 +1,40 @@
+:root {
+    --primary-color: #1d9f94;
+    --text-color: #2c2c2b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: Roboto;
+    line-height: 1.6rem;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* FONTS */
+@font-face {
+    font-family: Roboto;
+    src: url(../../static/fonts/Roboto/Roboto-Regular.woff2);
+}
+
+.image-center {
+    display: flex;
+    align-items: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}

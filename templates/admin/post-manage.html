@@ -3,6 +3,8 @@
 <!-- Page wrapper  -->
 <!-- ============================================================== -->
 <div class="page-wrapper">
+  {% csrf_token %}
+
   <!-- ============================================================== -->
   <!-- Bread crumb and right sidebar toggle -->
   <!-- ============================================================== -->
@@ -77,12 +79,93 @@
                   <td>{{post.content | truncatewords:5}}</td>
                   <td class="d-flex justify-content-end">
                     <button
-                      class="btn btn-primary rounded-pill px-3 d-inline-block w-auto"
+                      class="btn btn-primary rounded-pill px-3 d-inline-block w-auto delete-post-button"
                       style="width: 120px; margin-right: 10px"
-                      onclick="showDeleteModal({{ post.id }});"
+                      data-post-id="{{ post.id }}"
                     >
                       Delete
                     </button>
+                    {% comment %} sự kiện modal {% endcomment %}
+                    <script>
+                      document.addEventListener(
+                        "DOMContentLoaded",
+                        function () {
+                          const deleteButtons = document.querySelectorAll(
+                            ".delete-post-button"
+                          );
+
+                          deleteButtons.forEach((button) => {
+                            button.addEventListener("click", function () {
+                              const postId =
+                                button.getAttribute("data-post-id");
+                              const modal = document.querySelector(".modal");
+                              const confirmDeleteButton =
+                                document.getElementById("confirmDelete");
+                              const closeButtons =
+                                document.querySelectorAll(".close-button");
+
+                              // Xác định id bài viết để xóa
+                              confirmDeleteButton.setAttribute(
+                                "data-post-id",
+                                postId
+                              );
+
+                              // Hiển thị modal
+                              modal.style.display = "block";
+
+                              // Xử lý sự kiện khi nút Xác nhận xóa được nhấn
+                              confirmDeleteButton.addEventListener(
+                                "click",
+                                function () {
+                                  // Gửi yêu cầu xóa bài viết thông qua AJAX
+                                  fetch("{% url 'deletePost' %}", {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                      "X-CSRFToken": "{{ csrf_token }}",
+                                    },
+                                    body: JSON.stringify({ post_id: postId }),
+                                  })
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                      if (data.success) {
+                                        // Đóng modal khi xóa thành công
+                                        modal.style.display = "none";
+                                        // Reload trang sau khi xóa thành công
+                                        window.location.reload();
+                                      } else {
+                                        alert("Không thể xóa bài viết.");
+                                      }
+                                    })
+                                    .catch((error) => {
+                                      console.error(
+                                        "Lỗi khi gửi yêu cầu xóa:",
+                                        error
+                                      );
+                                    });
+                                }
+                              );
+
+                              // Xử lý sự kiện khi nút Hủy delete hoặc nút close được nhấn
+                              closeButtons.forEach((closeButton) => {
+                                closeButton.addEventListener(
+                                  "click",
+                                  function () {
+                                    // Đóng modal
+                                    modal.style.display = "none";
+                                    // Xóa thuộc tính data-post-id của nút Xác nhận
+                                    confirmDeleteButton.removeAttribute(
+                                      "data-post-id"
+                                    );
+                                  }
+                                );
+                              });
+                            });
+                          });
+                        }
+                      );
+                    </script>
+                    {% comment %} hết sự kiện modal {% endcomment %}
                     <a
                       href="{% url 'updatePost' post.id %}"
                       class="btn btn-primary rounded-pill px-3 d-inline-block w-auto"
@@ -123,15 +206,14 @@
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
 <!-- ============================================================== -->
-<div class="modal" tabindex="-1" id="deleteModal">
+<div class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Xác nhận xóa</h5>
         <button
           type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
+          class="btn-close close-button"
           aria-label="Close"
         ></button>
       </div>
@@ -139,10 +221,15 @@
         <p>Bạn có chắc chắn muốn xóa bài viết này không?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-secondary close-button">
           Hủy
         </button>
-        <button type="button" class="btn btn-primary" id="confirmDelete">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="confirmDelete"
+          data-dismiss="modal"
+        >
           Xác nhận
         </button>
       </div>

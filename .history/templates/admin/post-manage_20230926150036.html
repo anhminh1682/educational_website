@@ -1,0 +1,207 @@
+{% extends 'admin/main-dashboard.html' %}{% load static %} {% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  {% csrf_token %}
+
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb bg-white">
+    <div class="row align-items-center">
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h4 class="page-title">Post Manage</h4>
+      </div>
+      <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <div class="d-md-flex">
+          <ol class="breadcrumb ms-auto pb-8">
+            <li><a href="#" class="fw-normal">Post Manage</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="white-box">
+          <div class="container-fluid px-0">
+            <div class="row">
+              <div class="col-sm-6"><h3 class="box-title">Post Manage</h3></div>
+              <div class="col-sm-6">
+                <div class="d-flex justify-content-end">
+                  <a
+                    href="{% url 'addPost' %}"
+                    class="btn btn-primary rounded-pill px-3 d-inline-block w-auto"
+                    style="width: 120px"
+                  >
+                    Add new
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table text-nowrap">
+              <thead>
+                <tr>
+                  <th class="border-top-0">STT</th>
+                  <th class="border-top-0" style="display: {{user_not_admin}}">
+                    Người đăng
+                  </th>
+                  <th class="border-top-0">Thời gian</th>
+                  <th class="border-top-0">Chủ đề</th>
+                  <th class="border-top-0">Tóm tắt nội dung</th>
+                  <th class="border-top-0"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in posts %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td style="display: {{user_not_admin}}">
+                    {{ post.author.username}}
+                  </td>
+                  <td>{{post.date_create}}</td>
+                  <td>{{post.title}}</td>
+                  <td>{{post.content | truncatewords:5}}</td>
+                  <td class="d-flex justify-content-end">
+                    <button
+                      class="btn btn-primary rounded-pill px-3 d-inline-block w-auto delete-post-button"
+                      style="width: 120px; margin-right: 10px"
+                      data-post-id="{{ post.id }}"
+                    >
+                      Delete
+                    </button>
+                    {% comment %} sự kiện modal {% endcomment %}
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                        const deleteButtons = document.querySelectorAll(".delete-post-button");
+                      
+                        deleteButtons.forEach((button) => {
+                          button.addEventListener("click", function () {
+                            const postId = button.getAttribute("data-post-id");
+                            const modal = document.querySelector(".modal");
+                            const confirmDeleteButton = document.getElementById("confirmDelete");
+                      
+                            // Xác định id bài viết để xóa
+                            confirmDeleteButton.setAttribute("data-post-id", postId);
+                      
+                            // Hiển thị modal
+                            modal.style.display = "block";
+                      
+                            // Xử lý sự kiện khi nút Xác nhận xóa được nhấn
+                            confirmDeleteButton.addEventListener("click", function () {
+                              // Gửi yêu cầu xóa bài viết thông qua AJAX
+                              fetch("{% url 'deletePost' %}", {
+                                method: "POST",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                  "X-CSRFToken": "{{ csrf_token }}",
+                                },
+                                body: JSON.stringify({ post_id: postId }),
+                              })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                  if (data.success) {
+                                    // Đóng modal khi xóa thành công
+                                    modal.style.display = "none";
+                                    // Tải lại trang hoặc cập nhật giao diện người dùng theo nhu cầu
+                                  } else {
+                                    alert("Không thể xóa bài viết.");
+                                  }
+                                })
+                                .catch((error) => {
+                                  console.error("Lỗi khi gửi yêu cầu xóa:", error);
+                                });
+                            });
+                      
+                            // Xử lý sự kiện khi modal đóng
+                            modal.addEventListener("hidden.bs.modal", function () {
+                              // Xóa thuộc tính data-post-id của nút Xác nhận
+                              confirmDeleteButton.removeAttribute("data-post-id");
+                            });
+                          });
+                        });
+                      });
+                      </script>
+                      {% comment %} hết sự kiện modal {% endcomment %}
+                    <a
+                      href="{% url 'updatePost' post.id %}"
+                      class="btn btn-primary rounded-pill px-3 d-inline-block w-auto"
+                      style="width: 120px"
+                      >Update</a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">2021 ©</footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận xóa</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa bài viết này không?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Hủy
+        </button>
+        <button type="button" class="btn btn-primary" id="confirmDelete">
+          Xác nhận
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

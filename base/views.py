@@ -4,6 +4,7 @@ from django.urls import reverse
 from base.forms import PostForm
 from .models import *
 import json
+import base64
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -64,11 +65,9 @@ def logoutPage(request):
     logout(request)
     return redirect('home')
 
-
+@login_required
 def detailPage(request, post_id):
     user = get_common_context(request)
-    if not request.user.is_authenticated:
-        return redirect('login')
     post = get_object_or_404(Posts, id=post_id, is_deleted=False)
     paragraphs = post.content.split('\n')
     context = {'user': user, 'post': post, 'paragraphs': paragraphs}

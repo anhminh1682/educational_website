@@ -1,4 +1,4 @@
-{% extends 'main.html' %} {% load static %} {% block content %}
+{% extends 'main.html' %} {% load static %} {% load humanize %} {% block content %}
 
 <!-- Page content-->
 <div class="container mt-5">
@@ -12,7 +12,7 @@
           <h1 class="fw-bolder mb-1">Welcome to {{post.title}}!</h1>
           <!-- Post meta content-->
           <div class="text-muted fst-italic mb-2">
-            Posted on January 1, 2023 by Start Bootstrap
+            Posted on {{post.date_create|naturaltime}}
           </div>
           <!-- Post categories-->
           <a

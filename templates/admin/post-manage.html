@@ -83,13 +83,12 @@
                     >
                       Delete
                     </button>
-                    {% comment %} <button
+                    <a
+                      href="{% url 'updatePost' post.id %}"
                       class="btn btn-primary rounded-pill px-3 d-inline-block w-auto"
                       style="width: 120px"
+                      >Update</a
                     >
-                      Update
-                    </button> {% endcomment %}
-                    <a href="{% url 'updatePost' post.id %}" class="btn btn-primary rounded-pill px-3 d-inline-block w-auto" style="width: 120px">Update</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -124,65 +123,30 @@
 <!-- ============================================================== -->
 <!-- End Page wrapper  -->
 <!-- ============================================================== -->
-
-<script>
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-function showDeleteModal(postId) {
-  postIdToDelete = postId;
-  const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-  deleteModal.show();
-}
-
-document.getElementById("confirmDelete").addEventListener("click", function() {
-  if (postIdToDelete) {
-      // Gọi AJAX để xóa bài viết
-      fetch(`/delete_post/${postIdToDelete}/`, {
-          method: 'DELETE',
-          headers: {
-              'X-CSRFToken': getCookie('csrftoken')
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              location.reload(); // Làm mới trang sau khi xóa thành công
-          } else {
-              alert("Có lỗi xảy ra khi xóa: " + data.error);
-          }
-      });
-  }
-});
-</script>
 <div class="modal" tabindex="-1" id="deleteModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Xác nhận xóa</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <p>Bạn có chắc chắn muốn xóa bài viết này không?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button type="button" class="btn btn-primary" id="confirmDelete">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Hủy
+        </button>
+        <button type="button" class="btn btn-primary" id="confirmDelete">
+          Xác nhận
+        </button>
       </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

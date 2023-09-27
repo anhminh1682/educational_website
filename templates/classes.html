@@ -35,7 +35,7 @@
       {% for post in posts %}
       <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
         <div class="classes-item">
-          <div class="bg-light rounded-circle w-75 mx-auto p-3">
+          <div class="bg-light rounded-circle w-75 mx-auto image-post-item">
             <img
               class="img-fluid rounded-circle"
               src="{{post.image.url}}"
@@ -49,9 +49,7 @@
               >{{post.title}}</a
             >
             <div class="d-flex align-items-center justify-content-between mb-4">
-              <p class="text-center text-truncate">
-                {{post.content}}
-              </p>
+              <p class="text-center text-truncate">{{post.content}}</p>
             </div>
           </div>
         </div>

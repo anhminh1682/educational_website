@@ -49,7 +49,12 @@
                             type="file"
                             class="form-control mb-3"
                             onchange="readURL(this);"
-                            {% if is_required %}required{% endif %}
+                            {%
+                            if
+                            is_required
+                            %}required{%
+                            endif
+                            %}
                           />
                           <div
                             class="overflow-hidden w-100"
@@ -65,7 +70,13 @@
                                 object-fit: contain;
                               "
                               src="{{ post.image.url|default:'/static/images/blank-img.jpg' }}"
-                              {% comment %} src="{% static 'images/blank-img.jpg' %}" {% endcomment %}
+                              {%
+                              comment
+                              %}
+                              src="{% static 'images/blank-img.jpg' %}"
+                              {%
+                              endcomment
+                              %}
                               alt="your image"
                             />
                           </div>
@@ -85,7 +96,6 @@
                         value="{{ post.title }}"
                       />
                       <label for="postname">Chủ đề</label>
-            
                     </div>
                   </div>
                   <div class="col-sm-12">
@@ -110,20 +120,28 @@
                         placeholder="Description"
                         id="postDescription"
                         name="content"
-                      >{{ post.content|default:'' }}</textarea>
+                      >
+{{ post.content|default:'' }}</textarea
+                      >
                       <label for="postDescription">Nội dung</label>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <button class="btn btn-primary w-100 py-3" type="submit" onclick="setFormAction('create');"
-                      style = "display: {{user_new}}">
+                  <div class="col-6" style="display: {{user_new}}">
+                    <button
+                      class="btn btn-primary w-100 py-3"
+                      type="submit"
+                      onclick="setFormAction('create');"
+                    >
                       Create Post
                     </button>
                   </div>
 
-                  <div class="col-6">
-                    <button class="btn btn-primary w-100 py-3" type="submit" onclick="setFormAction('update');"
-                      style = "display: {{user_update}}">
+                  <div class="col-6" style="display: {{user_update}}">
+                    <button
+                      class="btn btn-primary w-100 py-3"
+                      type="submit"
+                      onclick="setFormAction('update');"
+                    >
                       Update Post
                     </button>
                   </div>
@@ -134,18 +152,18 @@
         </div>
       </div>
     </div>
-    
+
     <script>
       function setFormAction(actionType) {
-          let form = document.getElementById('postForm');
-          if (actionType === 'create') {
-              form.action = "/add-post/"; // URL cho việc tạo bài viết
-          } else if (actionType === 'update' && "{{ post_id }}") {
-              form.action = "/add-post/{{ post_id }}/"; // URL cho việc cập nhật bài viết
-          }
+        let form = document.getElementById("postForm");
+        if (actionType === "create") {
+          form.action = "/add-post/"; // URL cho việc tạo bài viết
+        } else if (actionType === "update" && "{{ post_id }}") {
+          form.action = "/add-post/{{ post_id }}/"; // URL cho việc cập nhật bài viết
+        }
       }
-  </script>
-  
+    </script>
+
     <!-- ============================================================== -->
     <!-- End PAge Content -->
     <!-- ============================================================== -->

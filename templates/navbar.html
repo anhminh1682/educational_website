@@ -26,9 +26,9 @@
     </div>
     <div style="display: {{ user.user_not_login }}">
       <a href="{% url 'dashboard' %}" class="user_name_menu">
-        <span style="font-size: 18px">{{ request.user }}</span>
+        <span style="font-size: 18px;">{{ request.user }}</span>
       </a>
-      <span style="display: inline-block; vertical-align: middle">
+      <span style="display: inline-block; vertical-align: middle; margin-left: 15px;">
         <a
           href="{% url 'logout' %}"
           class="btn btn-primary rounded-pill px-3 d-none d-lg-block"
